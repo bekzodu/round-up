@@ -1,12 +1,10 @@
 import './style/App.css';
-import AuthenticationPage from './pages/AuthenticationPage';
-import { app } from './firebase/config';
+import HomePage from '/pages/HomePage.jsx';
 
 function App() {
-  console.log('Firebase initialized:', app);
   return (
     <div className="App">
-      <AuthenticationPage />
+      <HomePage />
     </div>
   );
 }

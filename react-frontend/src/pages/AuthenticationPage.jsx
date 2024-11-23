@@ -2,11 +2,16 @@ import React, { useState } from 'react';
 import '../style/AuthenticationPage.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { signIn, signUp } from '../firebase/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import WelcomePage from './WelcomePage';
 
 const AuthenticationPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const [showWelcome, setShowWelcome] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -37,11 +42,18 @@ const AuthenticationPage = () => {
     return errorMessages[errorCode] || 'An unexpected error occurred';
   };
 
+  const clearForm = () => {
+    setFormData({
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    // Validation
     if (!isLogin && formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -58,9 +70,23 @@ const AuthenticationPage = () => {
         return;
       }
 
-      // Handle successful authentication
+      if (!isLogin) {
+        toast.success('Account created successfully!', {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
+        clearForm();
+        setCurrentUser(user);
+        setShowWelcome(true);
+      }
+
       console.log('Authenticated user:', user);
-      // You can redirect or update UI state here
     } catch (err) {
       setError('An unexpected error occurred');
       console.error('Auth error:', err);
@@ -69,75 +95,80 @@ const AuthenticationPage = () => {
 
   return (
     <div className="auth-container">
-      <div className="auth-box">
-        <h2>{isLogin ? 'Login' : 'Create Account'}</h2>
-        
-        {error && <div className="error-message">{error}</div>}
-        
-        <form onSubmit={handleSubmit}>
-          <div className="input-group">
-            <input
-              type="email"
-              name="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
-
-          <div className="input-group">
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              value={formData.password}
-              onChange={handleInputChange}
-              required
-            />
-            <button
-              type="button"
-              className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
-            </button>
-          </div>
-
-          {!isLogin && (
+      <ToastContainer />
+      {showWelcome ? (
+        <WelcomePage user={currentUser} />
+      ) : (
+        <div className="auth-box">
+          <h2>{isLogin ? 'Login' : 'Create Account'}</h2>
+          
+          {error && <div className="error-message">{error}</div>}
+          
+          <form onSubmit={handleSubmit}>
             <div className="input-group">
               <input
-                type={showPassword ? "text" : "password"}
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                value={formData.confirmPassword}
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={formData.email}
                 onChange={handleInputChange}
                 required
               />
             </div>
-          )}
 
-          <button type="submit" className="submit-btn">
-            {isLogin ? 'Login' : 'Create Account'}
+            <div className="input-group">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Password"
+                value={formData.password}
+                onChange={handleInputChange}
+                required
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+
+            {!isLogin && (
+              <div className="input-group">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            )}
+
+            <button type="submit" className="submit-btn">
+              {isLogin ? 'Login' : 'Create Account'}
+            </button>
+          </form>
+
+          <div className="separator">
+            <span>or</span>
+          </div>
+
+          <button
+            type="button"
+            className="switch-btn"
+            onClick={() => {
+              setIsLogin(!isLogin);
+              setError('');
+              setFormData({ email: '', password: '', confirmPassword: '' });
+            }}
+          >
+            {isLogin ? 'Create new account' : 'Login to existing account'}
           </button>
-        </form>
-
-        <div className="separator">
-          <span>or</span>
         </div>
-
-        <button
-          type="button"
-          className="switch-btn"
-          onClick={() => {
-            setIsLogin(!isLogin);
-            setError('');
-            setFormData({ email: '', password: '', confirmPassword: '' });
-          }}
-        >
-          {isLogin ? 'Create new account' : 'Login to existing account'}
-        </button>
-      </div>
+      )}
     </div>
   );
 };

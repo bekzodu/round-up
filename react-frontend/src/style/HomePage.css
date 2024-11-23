@@ -1,0 +1,14 @@
+.home-layout {
+  min-height: 100vh;
+  background-color: #0f1215;
+}
+
+.content-wrapper {
+  padding-top: 60px;
+  min-height: calc(100vh - 60px);
+}
+
+.main-content {
+  margin-left: 240px;
+  padding: 20px;
+}

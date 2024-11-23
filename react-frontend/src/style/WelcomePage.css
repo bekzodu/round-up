@@ -1,0 +1,86 @@
+.welcome-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #0f1215;
+    padding: 20px;
+  }
+  
+  .welcome-content {
+    background-color: #1a1f25;
+    padding: 2.5rem;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .welcome-content h1 {
+    color: #e4e4e4;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .welcome-content h2 {
+    color: #e4e4e4;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .welcome-content p {
+    color: #e4e4e4;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .points-display {
+    font-size: 3rem;
+    color: #1DA1F2;
+    font-weight: bold;
+    margin: 2rem 0;
+  }
+  
+  .next-btn, .finish-btn {
+    padding: 12px 30px;
+    background-color: #1DA1F2;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .next-btn:hover, .finish-btn:hover {
+    background-color: #1677b4;
+  }
+  
+  .username-input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 1.5rem;
+    border: 1px solid #2c3238;
+    border-radius: 5px;
+    background-color: #2c3238;
+    color: #e4e4e4;
+    font-size: 1.1rem;
+    transition: border-color 0.3s ease;
+  }
+  
+  .username-input:focus {
+    outline: none;
+    border-color: #1DA1F2;
+  }
+  
+  .error-message {
+    color: #ff4444;
+    background-color: rgba(255, 68, 68, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
