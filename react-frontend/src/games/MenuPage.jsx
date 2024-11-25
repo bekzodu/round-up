@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import '../style/MenuPage.css';
+import { useNavigate } from 'react-router-dom';
 
 const MenuPage = () => {
   const [activeTab, setActiveTab] = useState('solo');
+  const navigate = useNavigate();
 
   return (
     <div className="menu-layout">
@@ -34,6 +36,14 @@ const MenuPage = () => {
                 >
                   Upcoming
                 </button>
+              </div>
+            </div>
+            
+            <div className="games-grid">
+              <div className="game-card">
+                <img src="/assets/block-game.png" alt="Block Guess Game" className="game-image" />
+                <h3>Block Guess</h3>
+                <button className="join-btn" onClick={() => navigate('/block-game')}>Play</button>
               </div>
             </div>
           </div>

@@ -8,6 +8,7 @@ import { auth } from './firebase/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import MenuPage from './games/MenuPage';
 import WelcomePage from './pages/WelcomePage';
+import BlockGame from './games/BlockGame';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -50,6 +51,10 @@ function App() {
           <Route 
             path="/" 
             element={user && !isNewUser ? <HomePage /> : <Navigate to={isNewUser ? "/welcome" : "/login"} />} 
+          />
+          <Route 
+            path="/block-game" 
+            element={user ? <BlockGame /> : <Navigate to="/login" />} 
           />
         </Routes>
       </div>
