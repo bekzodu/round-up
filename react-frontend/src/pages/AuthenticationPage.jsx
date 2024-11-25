@@ -5,8 +5,10 @@ import { signIn, signUp } from '../firebase/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import WelcomePage from './WelcomePage';
+import { useNavigate } from 'react-router-dom';
 
-const AuthenticationPage = () => {
+const AuthenticationPage = ({ setIsNewUser }) => {
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -70,23 +72,11 @@ const AuthenticationPage = () => {
         return;
       }
 
-      if (!isLogin) {
-        toast.success('Account created successfully!', {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        clearForm();
-        setCurrentUser(user);
-        setShowWelcome(true);
+      if (!isLogin && user) {
+        setIsNewUser(true);
+        navigate('/welcome');
+        return;
       }
-
-      console.log('Authenticated user:', user);
     } catch (err) {
       setError('An unexpected error occurred');
       console.error('Auth error:', err);

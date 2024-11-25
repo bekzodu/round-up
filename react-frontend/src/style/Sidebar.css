@@ -1,3 +1,10 @@
+:root {
+  --sidebar-margin-expanded: 150px;
+  --sidebar-margin-collapsed: 40px;
+  --sidebar-width-expanded: 150px;
+  --sidebar-width-collapsed: 40px;
+}
+
 .sidebar {
   position: fixed;
   left: 0;
@@ -12,17 +19,17 @@
 }
 
 .sidebar.expanded {
-  width: 150px;
+  width: var(--sidebar-width-expanded);
 }
 
 .sidebar.collapsed {
-  width: 40px;
+  width: var(--sidebar-width-collapsed);
 }
 
 .toggle-button {
   position: relative;
-  width: 24px;
-  height: 24px;
+  width: 35px;
+  height: 35px;
   background-color: #1DA1F2;
   border: none;
   border-radius: 50%;
@@ -48,7 +55,7 @@
 .sidebar-content {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 60px;
 }
 
 .sidebar-button {
@@ -155,4 +162,13 @@
 
 .cancel-btn:hover {
   background-color: #3c424a;
+}
+
+/* Add this to dynamically set the sidebar width variable */
+.sidebar.expanded ~ * {
+  --content-margin: var(--sidebar-margin-expanded);
+}
+
+.sidebar.collapsed ~ * {
+  --content-margin: var(--sidebar-margin-collapsed);
 } 

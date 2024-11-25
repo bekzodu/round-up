@@ -4,8 +4,9 @@
 }
 
 .settings-content {
-  margin-left: 240px;
+  margin-left: var(--sidebar-width);
   padding: 80px 20px 20px;
+  transition: margin-left 0.3s ease;
 }
 
 .settings-container {
@@ -41,18 +42,24 @@
 
 .form-group {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
 }
 
 .form-group label {
   color: #e4e4e4;
   font-size: 1rem;
+  min-width: 120px;
+  text-align: left;
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"] {
+  width: 300px;
+  flex: none;
   padding: 12px;
   border: 1px solid #2c3238;
   border-radius: 5px;
@@ -75,10 +82,16 @@
 .form-group.checkbox {
   flex-direction: row;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .form-group.checkbox input[type="checkbox"] {
   margin-right: 10px;
+  flex: 0;
+}
+
+.form-group.checkbox label {
+  min-width: auto;
 }
 
 .save-btn {

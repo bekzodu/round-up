@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import '../style/SettingsPage.css';
@@ -6,8 +6,32 @@ import ProfilePicture from '../components/ProfilePicture';
 import { auth } from '../firebase/auth';
 import { updateProfile } from 'firebase/auth';
 import { toast } from 'react-toastify';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 const SettingsPage = () => {
+  const [username, setUsername] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const userDoc = await getDoc(doc(db, 'users', auth.currentUser.uid));
+        if (userDoc.exists()) {
+          setUsername(userDoc.data().username);
+        }
+      } catch (error) {
+        toast.error('Failed to fetch user data', { theme: 'dark' });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (auth.currentUser) {
+      fetchUsername();
+    }
+  }, []);
+
   return (
     <div className="settings-layout">
       <Navbar />
@@ -32,11 +56,19 @@ const SettingsPage = () => {
               <div className="settings-form">
                 <div className="form-group">
                   <label>Username</label>
-                  <input type="text" placeholder="Current username" />
+                  <input 
+                    type="text" 
+                    value={loading ? 'Loading...' : username}
+                    disabled
+                  />
                 </div>
                 <div className="form-group">
                   <label>Email</label>
-                  <input type="email" placeholder="Current email" disabled />
+                  <input 
+                    type="email" 
+                    value={auth.currentUser?.email || ''}
+                    disabled 
+                  />
                 </div>
               </div>
             </section>

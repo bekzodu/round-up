@@ -8,15 +8,25 @@ import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const navigate = useNavigate();
 
   const handleLogoutClick = () => {
     setShowConfirmation(true);
   };
 
-  const toggleSidebar = () => {
+  const toggleSidebar = (e) => {
+    e.stopPropagation();
     setIsExpanded(!isExpanded);
+  };
+
+  const handleNavigation = (path) => {
+    navigate(path);
+  };
+
+  const handleButtonClick = (e, callback) => {
+    e.stopPropagation();
+    callback();
   };
 
   const handleConfirmLogout = async () => {
@@ -57,15 +67,15 @@ const Sidebar = () => {
         <button className="toggle-button" onClick={toggleSidebar}>
           <FaChevronLeft className={`toggle-icon ${!isExpanded ? 'rotated' : ''}`} />
         </button>
-        <button className="sidebar-button" onClick={() => navigate('/games')}>
+        <button className="sidebar-button" onClick={(e) => handleButtonClick(e, () => handleNavigation('/games'))}>
           <FaGamepad className="sidebar-icon" />
           {isExpanded && <span>Games</span>}
         </button>
-        <button className="sidebar-button" onClick={() => navigate('/settings')}>
+        <button className="sidebar-button" onClick={(e) => handleButtonClick(e, () => handleNavigation('/settings'))}>
           <FaCog className="sidebar-icon" />
           {isExpanded && <span>Settings</span>}
         </button>
-        <button className="sidebar-button logout" onClick={handleLogoutClick}>
+        <button className="sidebar-button logout" onClick={(e) => handleButtonClick(e, handleLogoutClick)}>
           <FaSignOutAlt className="sidebar-icon" />
           {isExpanded && <span>Logout</span>}
         </button>

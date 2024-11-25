@@ -6,9 +6,12 @@
 .content-wrapper {
   padding-top: 60px;
   min-height: calc(100vh - 60px);
+  margin-left: var(--content-margin, var(--sidebar-margin-collapsed));
+  transition: margin-left 0.3s ease;
 }
 
 .main-content {
-  margin-left: 240px;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
 }

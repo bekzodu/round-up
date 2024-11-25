@@ -3,8 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import '../style/WelcomePage.css';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
+import { useNavigate } from 'react-router-dom';
 
-const WelcomePage = ({ user }) => {
+const WelcomePage = ({ user, setIsNewUser }) => {
+  const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [username, setUsername] = useState('');
   const [error, setError] = useState('');
@@ -22,7 +24,9 @@ const WelcomePage = ({ user }) => {
         points: 1000,
         createdAt: new Date()
       });
-      // Handle successful completion (you'll need to implement navigation later)
+      
+      setIsNewUser(false);
+      navigate('/');
     } catch (error) {
       setError('Error creating profile. Please try again.');
     }

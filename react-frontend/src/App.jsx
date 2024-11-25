@@ -7,10 +7,12 @@ import AuthenticationPage from './pages/AuthenticationPage';
 import { auth } from './firebase/auth';
 import { onAuthStateChanged } from 'firebase/auth';
 import MenuPage from './games/MenuPage';
+import WelcomePage from './pages/WelcomePage';
 
 function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isNewUser, setIsNewUser] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -22,7 +24,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return null; // or a loading spinner
+    return null;
   }
 
   return (
@@ -31,19 +33,23 @@ function App() {
         <Routes>
           <Route 
             path="/login" 
-            element={user ? <Navigate to="/" replace /> : <AuthenticationPage />} 
+            element={user && !isNewUser ? <Navigate to="/" replace /> : <AuthenticationPage setIsNewUser={setIsNewUser} />} 
+          />
+          <Route 
+            path="/welcome" 
+            element={user && isNewUser ? <WelcomePage user={user} setIsNewUser={setIsNewUser} /> : <Navigate to="/login" />} 
           />
           <Route 
             path="/settings" 
-            element={user ? <SettingsPage /> : <Navigate to="/login" replace state={{ from: '/settings' }} />} 
+            element={user ? <SettingsPage /> : <Navigate to="/login" />} 
           />
           <Route 
             path="/games" 
-            element={user ? <MenuPage /> : <Navigate to="/login" replace state={{ from: '/games' }} />} 
+            element={user ? <MenuPage /> : <Navigate to="/login" />} 
           />
           <Route 
             path="/" 
-            element={user ? <HomePage /> : <Navigate to="/login" replace state={{ from: '/' }} />} 
+            element={user && !isNewUser ? <HomePage /> : <Navigate to={isNewUser ? "/welcome" : "/login"} />} 
           />
         </Routes>
       </div>
