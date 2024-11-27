@@ -43,11 +43,11 @@
 }
 
 .block.correct {
-  box-shadow: 0 0 20px rgba(46, 213, 115, 0.5);
-  background-color: rgba(46, 213, 115, 0.2);
+  box-shadow: 0 0 20px rgba(46, 213, 115, 1);
+  background-color: rgba(46, 213, 115, 0.8);
 }
 
 .block.incorrect {
-  box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
-  background-color: rgba(255, 71, 87, 0.2);
+  box-shadow: 0 0 20px rgba(255, 71, 87, 1);
+  background-color: rgba(255, 71, 87, 0.8);
 }

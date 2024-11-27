@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
 import '../style/Sidebar.css';
-import { FaGamepad, FaCog, FaSignOutAlt, FaChevronLeft } from 'react-icons/fa';
+import { FaGamepad, FaCog, FaSignOutAlt, FaChevronLeft, FaTools } from 'react-icons/fa';
 import { logOut } from '../firebase/auth';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
+import { useAdmin } from '../utils/AdminContext';
 
 const Sidebar = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
+  const isAdmin = useAdmin();
   const navigate = useNavigate();
 
   const handleLogoutClick = () => {
@@ -75,6 +77,12 @@ const Sidebar = () => {
           <FaCog className="sidebar-icon" />
           {isExpanded && <span>Settings</span>}
         </button>
+        {isAdmin && (
+          <button className="sidebar-button" onClick={(e) => handleButtonClick(e, () => handleNavigation('/admin'))}>
+            <FaTools className="sidebar-icon" />
+            {isExpanded && <span>Admin Console</span>}
+          </button>
+        )}
         <button className="sidebar-button logout" onClick={(e) => handleButtonClick(e, handleLogoutClick)}>
           <FaSignOutAlt className="sidebar-icon" />
           {isExpanded && <span>Logout</span>}
