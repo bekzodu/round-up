@@ -17,7 +17,8 @@ const MenuPage = () => {
       navigate(`/${game}`);
       return;
     }
-    // Regular user access logic here
+    // Regular user access
+    navigate(`/${game}`);
   };
 
   return (

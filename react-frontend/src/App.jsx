@@ -54,7 +54,7 @@ function App() {
             />
             <Route 
               path="/" 
-              element={user && !isNewUser ? <HomePage /> : <Navigate to={isNewUser ? "/welcome" : "/login"} />} 
+              element={user && !isNewUser ? <MenuPage /> : <Navigate to={isNewUser ? "/welcome" : "/login"} />} 
             />
             <Route 
               path="/block-game" 
